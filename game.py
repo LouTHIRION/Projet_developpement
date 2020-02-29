@@ -82,7 +82,10 @@ def getCopieJeu(jeu):
 		Quand on copie un jeu on en calcule forcement les coups valides avant
 	"""
 	new_jeu = initialiseJeu()
-	new_jeu.plateau = getCopiePlateau(jeu.plat)
+	#new_jeu.plateau = getCopiePlateau(jeu.plat)
+	for l in range(game.lignes):
+		for c in range(game.colonnes):
+			new_jeu.plat.plateau[l][c] = jeu.plat.plateau[l][c]
 	new_jeu.coups_joues = getCopieListeCoups(jeu.coups_joues)
 	if (jeu.coups_possibles[0] != None):
 		new_jeu.coups_possibles = getCopieListeCoups(jeu.coups_possibles)
@@ -93,30 +96,39 @@ def getCopieJeu(jeu):
 	return new_jeu
 
 def finJeu(jeu):
-    """ jeu -> bool
-        Retourne vrai si c'est la fin du jeu
-    """
+	""" jeu -> bool
+		Retourne vrai si c'est la fin du jeu
+	"""
+	return game.finJeu(jeu)
 
 def saisieCoup(jeu):
-    """ jeu -> coup
-        Retourne un coup a jouer
-        On suppose que la fonction n'est appelee que si il y a au moins un coup valide possible
-        et qu'elle retourne obligatoirement un coup valide
-    """
+	""" jeu -> coup
+		Retourne un coup a jouer
+		On suppose que la fonction n'est appelee que si il y a au moins 
+		un coup valide possible et qu'elle retourne obligatoirement un coup valide
+	"""
+	if (jeu.joueur == 1):
+		return joueur1.saisieCoup(jeu)
+	return joueur2.saisieCoup(jeu)
 
 def getCoupsValides(jeu):
 	""" jeu  -> List[coup]
 		Retourne la liste des coups valides dans le jeu passe en parametre
 		Si None, alors on met � jour la liste des coups valides
 	"""
-	if (jeu.coups_possible == None):
-		print (BONJOUR)
+	if (jeu.coups_possibles == [None]):
+		return game.getCoupsValides(jeu)
+	return jeu.coups_possibles
 		
 
 def coupValide(jeu,coup):
-    """jeu*coup->bool
-        Retourne vrai si le coup appartient a la liste de coups valides du jeu
-   """
+	"""jeu*coup->bool
+		Retourne vrai si le coup appartient a la liste de coups valides du jeu
+	"""
+	for Coup in jeu.coups_possibles:
+		if (Coup.ligne == coup.ligne and Coup.colonne == coup.colonne):
+			return True
+	return False
 
 def joueCoup(jeu,coup):
 	"""jeu*coup->void
@@ -126,7 +138,7 @@ def joueCoup(jeu,coup):
 	"""
 	game.updatePlateauScore(jeu, coup)
 	jeu.coups_joues.append(coup)
-	coups_possibles = [None]
+	jeu.coups_possibles = [None]
 	changeJoueur(jeu)
 	
 	
@@ -156,7 +168,7 @@ def afficheCoup(coup):
 	""" coup->void
 		Affiche un coup
 	"""
-	
+	print ("ligne:",coup.ligne,"colonne:",coup.colonne)
 
 def affiche(jeu):
 	""" jeu->void
@@ -177,19 +189,26 @@ def affiche(jeu):
 			Hypothese : le contenu de chaque case ne depasse pas 5 caracteres
 	"""
 	if (len(getCoupsJoues(jeu)) == 0):
-		print ("Premier tour !!!")
+		print ("Premier tour !!!\n")
 	else:
-		print ("Dernier coup joue = ligne:", getCoupsJoues(jeu)[len(getCoupsJoues(jeu))-1].ligne,"colonne:", getCoupsJoues(jeu)[len(getCoupsJoues(jeu))-1].colonne)
+		print ("Dernier coup joue = ", end="")
+		afficheCoup(getCoupsJoues(jeu)[len(getCoupsJoues(jeu))-1])
 	print ("Score = ", getScores(jeu))
 	print ("Plateau :")
 	print ("   ", end='')
 	for i in range(game.colonnes):
 		print ("| ", i, " ", end='')
-	print ("")
+	print ("|")
+	for i in range(game.colonnes*6+4):
+		print ("-", end='')
+	print("")
 	for l in range(game.lignes):
-		print ("", l, "",end='')
+		print ("", l+1, "",end='')
 		for c in range(game.colonnes):
-			print ("| ", getCaseVal(jeu, l, c), " ", end='')
+			print ("| ", str(getCaseVal(jeu, l, c)), " ", end='')
+		print("|")
+		for i in range(game.colonnes*6+4):
+			print ("-", end='')
 		print("")
 	print ("Joueur", getJoueur(jeu),", a vous de jouer")
 
