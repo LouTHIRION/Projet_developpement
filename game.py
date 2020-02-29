@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+bonjour
 game=None #Contient le module du jeu specifique: awele ou othello
 joueur1=None #Contient le module du joueur 1
 joueur2=None #Contient le module du joueur 2
