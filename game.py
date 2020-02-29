@@ -203,7 +203,7 @@ def affiche(jeu):
 		print ("-", end='')
 	print("")
 	for l in range(game.lignes):
-		print ("", l+1, "",end='')
+		print ("", l, "",end='')
 		for c in range(game.colonnes):
 			print ("| ", str(getCaseVal(jeu, l, c)), " ", end='')
 		print("|")
@@ -241,7 +241,13 @@ def getJoueur(jeu):
 	"""
 	return jeu.joueur
 
-
+def getLautreJoueur(jeu):
+	""" jeu  -> nat
+		Retourne le joueur a qui ce n'est pas le tour de jouer dans le jeu passe en parametre
+	"""
+	if (jeu.joueur == 1):
+		return 2
+	return 1
 
 def changeJoueur(jeu):
 	""" jeu  -> void

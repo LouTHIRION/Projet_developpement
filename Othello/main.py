@@ -16,7 +16,14 @@ JEU = game.initialiseJeu()
 print (game.getCaseVal(JEU, 1, 1))"""
 #print (othello.getCoupsValides(JEU.plat))
 
-
-JEU.plat.plateau[3][1] = 1
-othello.updatePlateau(JEU, game.coup(4,2))
+#game.changeJoueur(JEU)
+JEU.plat.plateau[4][2] = 2
+JEU.plat.plateau[5][1] = 2
 game.affiche(JEU)
+othello.updatePlateauScore(JEU, game.coup(6,0))
+game.affiche(JEU)
+"""for c in game.getCoupsValides(JEU):
+	game.afficheCoup(c)"""
+
+
+
