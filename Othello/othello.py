@@ -35,18 +35,19 @@ def updatePlateauScore(jeu, coup):
 	colonne_coup = coup.colonne
 	#On place le pion
 	jeu.plat.plateau[ligne_coup][colonne_coup] = jeu.joueur
-	#On fait les eventuels changements de couleur
+	#On fait les eventuels changements de couleur en parcourant le damier a la recherche de pions de meme couleur
 	for l in range(lignes):
 		for c in range(colonnes):
-			# test si il y a des pions sur la meme ligne, colonne ou diagonales que 
-			# celui qui vient d'etre pose
 			if (jeu.plat.plateau[l][c] == jeu.joueur):
-				# si c'est le cas cherche si il y a des pions de l'adversaire entre ces pions
-				# sur la meme ligne
+				# test si il y a des pions de meme couleur sur la meme ligne,
+				# colonne ou diagonales que celui qui vient d'etre pose :
+				# sur la meme ligne (a peu pres le meme schema est repete 4 fois)
 				if (l == ligne_coup and (c > colonne_coup+1 or c < colonne_coup-1)):
+					# si c'est le cas cherche si il y a des pions de l'adversaire entre ces pions
 					liste_coord_pion = []
-					C = min(c, colonne_coup)+1
+					C = min(c, colonne_coup)+1 
 					while(C < max(c, colonne_coup)):
+						# si il y en a, on les change de couleur, sinon on sort de la boucle 
 						if (jeu.plat.plateau[l][C] != game.getLautreJoueur(jeu)):
 							C = max(c, colonne_coup)
 						else:
@@ -68,7 +69,7 @@ def updatePlateauScore(jeu, coup):
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
 							L += 1
-				# sur la meme diagonales
+				# sur la meme diagonale
 				elif (c-colonne_coup == ligne_coup-l and (c != colonne_coup and l != ligne_coup)):
 					liste_coord_pion = []
 					C = min(c, colonne_coup)+1
@@ -79,16 +80,25 @@ def updatePlateauScore(jeu, coup):
 						else:
 							liste_coord_pion.append((L, C))
 							if (C == max(c, colonne_coup)-1 and L == min(l, ligne_coup)+1):
-								print(liste_coord_pion)
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
 							C += 1
 							L -= 1
 				elif (c-colonne_coup == l-ligne_coup and (c != colonne_coup and l != ligne_coup)):
-					print("salut)
+					liste_coord_pion = []
+					C = min(c, colonne_coup)+1
+					L = min(l, ligne_coup)+1
+					while(C < max(c, colonne_coup) and L < max(l, ligne_coup)):
+						if (jeu.plat.plateau[L][C] != game.getLautreJoueur(jeu)):
+							L = max(l, ligne_coup)
+						else:
+							liste_coord_pion.append((L, C))
+							if (C == max(c, colonne_coup)-1 and L == max(l, ligne_coup)-1):
+								for p in liste_coord_pion:
+									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
+							C += 1
+							L += 1
 							
-					#for C in range (min(c, colonne_coup)+1,max(c, colonne_coup)):
-				"""or (c == colonne_coup and l != ligne_coup) or (l-ligne_coup == c-colonne_coup):"""
 	
 
 
