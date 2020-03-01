@@ -117,7 +117,8 @@ def getCoupsValides(jeu):
 		Si None, alors on met � jour la liste des coups valides
 	"""
 	if (jeu.coups_possibles == [None]):
-		return game.getCoupsValides(jeu)
+		jeu.coups_possibles = game.getCoupsValides(jeu)
+		return jeu.coups_possibles
 	return jeu.coups_possibles
 		
 
@@ -148,7 +149,7 @@ def initialiseJeu():
 		Initialise le jeu (nouveau plateau, liste des coups joues vide, liste des coups valides None, scores a 0 et joueur = 1)
 	"""
 	jeu = Jeu(game.lignes, game.colonnes, [], [None], 1, [0, 0])
-	game.initialisePlateau(jeu)
+	game.initialiseJeu(jeu)
 	return jeu
 
 def getGagnant(jeu):

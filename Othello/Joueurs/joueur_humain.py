@@ -9,6 +9,11 @@ def saisieCoup(jeu):
 		Retourne un coup a jouer
 	"""
 	print ("Entrez les coordonnées de votre coups.")
-	coord_x = input("quel ligne ? ")
-	coord_y = input("quelle colonne ? ")
-    
+	ligne = int(input("quel ligne ? "))
+	colonne = int(input("quelle colonne ? "))
+	Coup = game.coup(ligne, colonne)
+	while (not game.coupValide(jeu, Coup)):
+		print("Le coup que vous voulez effectuer est impossible !!!\nVeuillez reessayer : ")
+		Coup.ligne = int(input("quel ligne ? "))
+		Coup.colonne = int(input("quelle colonne ? "))
+	return Coup

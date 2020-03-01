@@ -16,15 +16,22 @@ JEU = game.initialiseJeu()
 print (game.getCaseVal(JEU, 1, 1))"""
 #print (othello.getCoupsValides(JEU.plat))
 
-game.changeJoueur(JEU)
-JEU.plat.plateau[4][6] = 1
-JEU.plat.plateau[5][1] = 1
-JEU.plat.plateau[4][7] = 2
-game.affiche(JEU)
-othello.updatePlateauScore(JEU, game.coup(4,5))
-game.affiche(JEU)
-"""for c in game.getCoupsValides(JEU):
-	game.afficheCoup(c)"""
+print ("BIENVENUE sur le jeu OTHELLO !!!\n")
+jeu = game.initialiseJeu()
+
+# Boucle principal du jeu
+while (not game.finJeu(jeu)):
+	game.affiche(jeu)
+	game.getCoupsValides(jeu)
+	game.joueCoup(jeu, game.saisieCoup(jeu))
+
+
+print ("C'est la fin du jeu et c'est", end="")
+gagnant = game.getGagnant(jeu)
+if (gagnant == 0):
+	print ("un MATCH NUL !!!")
+else:
+	print("le JOUEUR", gagnant,"qui gagne, BRAVO a lui !!!")
 
 
 

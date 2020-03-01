@@ -13,6 +13,5 @@ def saisieCoup(jeu):
 	Coup = game.coup(jeu.joueur-1,colonne)
 	while (not game.coupValide(jeu, Coup)):
 		print("Le coup que vous voulez effectuer est impossible !!!\nVeuillez reessayer : ")
-		colonne = int(input("Entrez votre coup : "))
-		Coup.colonne = colonne
+		Coup.colonne = int(input("Entrez votre coup : "))
 	return Coup

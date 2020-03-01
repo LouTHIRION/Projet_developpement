@@ -6,7 +6,7 @@ import game
 lignes = 2 
 colonnes = 6 
 
-def initialisePlateau(jeu):
+def initialiseJeu(jeu):
 	"""jeu -> void
 		Prend un Plateau vierge et l'initialise pour le jeu awele
 	"""
@@ -58,6 +58,7 @@ def getCoupsValides(jeu):
 	"""jeu -> List[coup]
 		etourne la liste des coups valide a partir du plateau du jeu awele
 	"""
+	liste_coups_valides = []
 	camp_joueur = jeu.joueur-1
 	# Boucle qui parcourt chaque trou du joueur qui va jouer
 	for t in range(colonnes):
@@ -76,15 +77,15 @@ def getCoupsValides(jeu):
 				C += 1
 			# si il ne l'affame pas alors c'est un coup valide
 			if (compteur != colonnes):
-				jeu.coups_possibles.append(Coup)
-	jeu.coups_possibles.remove(None)
-	return jeu.coups_possibles
+				liste_coups_valides.append(Coup)
+	return liste_coups_valides
 				
 
 def finJeu(jeu):
 	""" jeu -> bool
 		Retourne vrai si c'est la fin du jeu
     	"""
+    #test si un des deux camps n'est pas vide
 	res = [0,0]
 	for l in range(lignes):
 		for c in range(colonnes):

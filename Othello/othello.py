@@ -6,20 +6,24 @@ import game
 lignes = 8
 colonnes = 8
 
-def initialisePlateau(jeu):
+def initialiseJeu(jeu):
 	"""jeu -> void
 		Prend un Plateau vierge et l'initialise pour le jeu Othello
 	"""
-	#on ajoute deux pions de chaque couleur au centre du Plateau
+	# on ajoute deux pions de chaque couleur au centre du Plateau
 	jeu.plat.plateau[lignes//2-1][colonnes//2-1]=1
 	jeu.plat.plateau[lignes//2-1][colonnes//2]=2
 	jeu.plat.plateau[lignes//2][colonnes//2-1]=2
 	jeu.plat.plateau[lignes//2][colonnes//2]=1
+	# on met a jour les scores des joueurs
+	jeu.scores[0] = 2
+	jeu.scores[1] = 2
 
 def getCoupsValides(jeu):
 	"""jeu -> List[coup]
 		Retourne la liste des coups valide a partir du plateau du jeu othello
 	"""
+	# On parcourt le damier, lorsqu'une case est a 0 alors c'est un coup possible
 	liste_coups = []
 	for l in range(lignes):
 		for c in range(colonnes):
@@ -35,6 +39,7 @@ def updatePlateauScore(jeu, coup):
 	colonne_coup = coup.colonne
 	#On place le pion
 	jeu.plat.plateau[ligne_coup][colonne_coup] = jeu.joueur
+	jeu.scores[jeu.joueur-1] += 1
 	#On fait les eventuels changements de couleur en parcourant le damier a la recherche de pions de meme couleur
 	for l in range(lignes):
 		for c in range(colonnes):
@@ -55,6 +60,8 @@ def updatePlateauScore(jeu, coup):
 							if (C == max(c, colonne_coup)-1):
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
+									jeu.scores[jeu.joueur-1] += 1
+									jeu.scores[game.getLautreJoueur(jeu)-1] -=1
 							C += 1
 				# sur la meme colonne
 				elif (c == colonne_coup and (l > ligne_coup+1 or l < ligne_coup-1)):
@@ -68,6 +75,8 @@ def updatePlateauScore(jeu, coup):
 							if (L == max(l, ligne_coup)-1):
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
+									jeu.scores[jeu.joueur-1] += 1
+									jeu.scores[game.getLautreJoueur(jeu)-1] -=1
 							L += 1
 				# sur la meme diagonale
 				elif (c-colonne_coup == ligne_coup-l and (c != colonne_coup and l != ligne_coup)):
@@ -82,6 +91,8 @@ def updatePlateauScore(jeu, coup):
 							if (C == max(c, colonne_coup)-1 and L == min(l, ligne_coup)+1):
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
+									jeu.scores[jeu.joueur-1] += 1
+									jeu.scores[game.getLautreJoueur(jeu)-1] -=1
 							C += 1
 							L -= 1
 				elif (c-colonne_coup == l-ligne_coup and (c != colonne_coup and l != ligne_coup)):
@@ -96,10 +107,21 @@ def updatePlateauScore(jeu, coup):
 							if (C == max(c, colonne_coup)-1 and L == max(l, ligne_coup)-1):
 								for p in liste_coord_pion:
 									jeu.plat.plateau[p[0]][p[1]] = jeu.joueur
+									jeu.scores[jeu.joueur-1] += 1
+									jeu.scores[game.getLautreJoueur(jeu)-1] -=1
 							C += 1
 							L += 1
 							
-	
+
+def finJeu(jeu):
+	""" jeu -> bool
+		Retourne vrai si c'est la fin du jeu
+	"""
+	for l in range(lignes):
+		for c in range(colonnes):
+			if (jeu.plat.plateau[l][c] == 0):
+				return False
+	return True
 
 
 
