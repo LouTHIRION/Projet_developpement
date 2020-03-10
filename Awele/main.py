@@ -7,8 +7,10 @@ import awele
 game.game=awele
 sys.path.append("./Joueurs")
 import joueur_humain
-game.joueur1=joueur_humain
-game.joueur2=joueur_humain
+import joueur_horizon1
+game.joueur1=joueur_horizon1
+game.joueur2=joueur_horizon1
+import time
 
 """
 JEU = game.initialiseJeu()
@@ -34,11 +36,11 @@ jeu = game.initialiseJeu()
 # Boucle principal du jeu
 while (not game.finJeu(jeu)):
 	game.affiche(jeu)
-	game.getCoupsValides(jeu)
 	game.joueCoup(jeu, game.saisieCoup(jeu))
+	#time.sleep(.5)
 
 
-print ("C'est la fin du jeu et c'est", end="")
+print ("C'est la fin du jeu et c'est ", end="")
 gagnant = game.getGagnant(jeu)
 if (gagnant == 0):
 	print ("un MATCH NUL !!!")

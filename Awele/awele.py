@@ -56,7 +56,7 @@ def updatePlateauScore(jeu, coup):
 
 def getCoupsValides(jeu):
 	"""jeu -> List[coup]
-		etourne la liste des coups valide a partir du plateau du jeu awele
+		retourne la liste des coups valide a partir du plateau du jeu awele
 	"""
 	liste_coups_valides = []
 	camp_joueur = jeu.joueur-1
@@ -81,16 +81,16 @@ def getCoupsValides(jeu):
 	return liste_coups_valides
 				
 
-def finJeu(jeu):
+#def finJeu(jeu):
 	""" jeu -> bool
 		Retourne vrai si c'est la fin du jeu
     	"""
     #test si un des deux camps n'est pas vide
-	res = [0,0]
+	"""res = [0,0]
 	for l in range(lignes):
 		for c in range(colonnes):
 			res[l] += jeu.plat.plateau[l][c]
-	return not(res[0] and res[1])
+	return not(res[0] and res[1])"""
 
 
 

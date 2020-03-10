@@ -113,15 +113,15 @@ def updatePlateauScore(jeu, coup):
 							L += 1
 							
 
-def finJeu(jeu):
+#def finJeu(jeu):
 	""" jeu -> bool
 		Retourne vrai si c'est la fin du jeu
 	"""
-	for l in range(lignes):
+	"""for l in range(lignes):
 		for c in range(colonnes):
 			if (jeu.plat.plateau[l][c] == 0):
 				return False
-	return True
+	return True"""
 
 
 

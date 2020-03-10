@@ -99,7 +99,10 @@ def finJeu(jeu):
 	""" jeu -> bool
 		Retourne vrai si c'est la fin du jeu
 	"""
-	return game.finJeu(jeu)
+	if (getCoupsValides(jeu) == []):
+		return True
+	return False
+	#return game.finJeu(jeu)
 
 def saisieCoup(jeu):
 	""" jeu -> coup
